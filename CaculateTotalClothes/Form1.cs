@@ -111,7 +111,7 @@ namespace CaculateTotalClothes
                                         a.Style,
                                         a.Color
                                     } into val
-                                    //orderby new {val.Key.Buyer, val.Key.Style}
+                                    //orderby val.Key.Buyer, val.Key.Style, val.Key.Color
                                     select new
                                     {
                                         Buyer = val.Key.Buyer,
@@ -201,7 +201,7 @@ namespace CaculateTotalClothes
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            dataGrdView.DataSource = mBindingSource;
         }
 
         private void tb_styleCode_KeyDown(object sender, KeyEventArgs e)
