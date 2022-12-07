@@ -12,6 +12,7 @@ namespace CaculateTotalClothes
     public partial class Form1 : Form
     {
         public BindingSource mBindingSource;
+        public List<Result> dataFilter = new List<Result>();
 
         public Form1()
         {
@@ -112,7 +113,7 @@ namespace CaculateTotalClothes
                                         a.Color
                                     } into val
                                     //orderby val.Key.Buyer, val.Key.Style, val.Key.Color
-                                    select new
+                                    select new Result()
                                     {
                                         Buyer = val.Key.Buyer,
                                         Style = val.Key.Style,
@@ -127,6 +128,8 @@ namespace CaculateTotalClothes
                                                 + ", M: " + val.Sum(x => x.Size.M + x.Size.MP)
                                     };
                         //dataGrdView.DataSource = _bind.ToList();
+
+                        dataFilter = _bind.ToList();
                         mBindingSource = new BindingSource();
                         mBindingSource.DataSource = _bind.ToList();
                         dataGrdView.DataSource = mBindingSource;
@@ -158,6 +161,7 @@ namespace CaculateTotalClothes
             public int XS { get; set; }
             public int S { get; set; }
             public int M { get; set; }
+            public string Data { get; set; }
         }
         public class Products
         {
@@ -210,11 +214,23 @@ namespace CaculateTotalClothes
             {
                 try
                 {
-                    if (mBindingSource != null)
+                    if (cbb_styleCode.Text == "Buyer")
                     {
-                        mBindingSource.Filter = string.Format("{0} = '{1}'", cbb_styleCode.Text, tb_styleCode.Text);
-                        dataGrdView.DataSource = mBindingSource;
+                        dataGrdView.DataSource = dataFilter.Where(x => x.Buyer.Contains(tb_styleCode.Text.ToUpper())).ToList();
                     }
+                    else if (cbb_styleCode.Text == "Style")
+                    {
+                        dataGrdView.DataSource = dataFilter.Where(x => x.Style.Contains(tb_styleCode.Text.ToUpper())).ToList();
+                    }
+                    else
+                    {
+                        dataGrdView.DataSource = dataFilter.Where(x => x.Color.Contains(tb_styleCode.Text.ToUpper())).ToList();
+                    }
+                    //if (mBindingSource != null)
+                    //{
+                    //    mBindingSource.Filter = string.Format("{0} = '{1}'", cbb_styleCode.Text, tb_styleCode.Text);
+                    //    dataGrdView.DataSource = mBindingSource;
+                    //}
                 }
                 catch (Exception ex)
                 {
