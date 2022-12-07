@@ -35,9 +35,9 @@ namespace CaculateTotalClothes
                             var workShaeet = workbook.Worksheets.Select(x => x.Name).ToList();
                             var workSheet = workbook.Worksheets.Where(x => x.Name == "VNKS (1.11)").First();
                             var properties = typeOfObject.GetProperties();
-                            var columns = workSheet.FirstRow().Cells().Select((v, i) => new { Value = v.Value, Index = i + 1 });
+                            var columns = workSheet.Row(3).Cells().Select((v, i) => new { Value = v.Value, Index = i + 1 });
 
-                            foreach (IXLRow row in workSheet.RowsUsed().Skip(11))
+                            foreach (IXLRow row in workSheet.RowsUsed().Skip(13))
                             {
                                 try
                                 {
