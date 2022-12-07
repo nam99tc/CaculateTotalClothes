@@ -112,7 +112,7 @@ namespace CaculateTotalClothes
                                         a.Style,
                                         a.Color
                                     } into val
-                                    //orderby val.Key.Buyer, val.Key.Style, val.Key.Color
+                                    orderby val.Key.Style, val.Key.Color
                                     select new Result()
                                     {
                                         Buyer = val.Key.Buyer,
