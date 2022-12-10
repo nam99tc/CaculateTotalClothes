@@ -33,12 +33,17 @@ namespace CaculateTotalClothes
                         using (IXLWorkbook workbook = new XLWorkbook(file.FileName))
                         {
                             var workShaeet = workbook.Worksheets.Select(x => x.Name).ToList();
-                            var workSheet = workbook.Worksheets.Where(x => x.Name == "VNKS (1.11)").First();
+                            //var workSheet = workbook.Worksheets.Where(x => x.Name == "VNKS (1.11)").First();
+                            var workSheet = workbook.Worksheets.Skip(1).First();
                             var properties = typeOfObject.GetProperties();
                             var columns = workSheet.Row(3).Cells().Select((v, i) => new { Value = v.Value, Index = i + 1 });
 
                             foreach (IXLRow row in workSheet.RowsUsed().Skip(13))
                             {
+                                if (row.RangeAddress.FirstAddress.RowNumber == 18)
+                                {
+
+                                }
                                 try
                                 {
                                     Products obj = (Products)Activator.CreateInstance(typeOfObject);
@@ -98,7 +103,7 @@ namespace CaculateTotalClothes
                                     }
                                     products.Add(obj);
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
                                     throw;
                                 }
@@ -123,9 +128,12 @@ namespace CaculateTotalClothes
                                         XS = val.Sum(x => x.Size.XS + x.Size.XSP),
                                         S = val.Sum(x => x.Size.S + x.Size.SP),
                                         M = val.Sum(x => x.Size.M + x.Size.MP),
-                                        Data = "Buyer: " + val.Key.Buyer + ", Style: " + val.Key.Style + ", Color: " + val.Key.Color + ", XXS: " + val.Sum(x => x.Size.XXS + x.Size.XXSP)
-                                                + ", XS: " + val.Sum(x => x.Size.XS + x.Size.XSP) + ", S: " + val.Sum(x => x.Size.S + x.Size.SP)
-                                                + ", M: " + val.Sum(x => x.Size.M + x.Size.MP)
+                                        Data = /*"Buyer: " + val.Key.Buyer + ", Style: " + val.Key.Style + ", Data: " + */
+                                                val.Key.Color + ": " + val.Sum(x => x.Size.XXXS + x.Size.XXXSP) + " XXXS, " 
+                                                + val.Sum(x => x.Size.XXS + x.Size.XXSP) + " XXS, "
+                                                + val.Sum(x => x.Size.XS + x.Size.XSP)+ " XS, "
+                                                + val.Sum(x => x.Size.S + x.Size.SP)+ " S, "
+                                                + val.Sum(x => x.Size.M + x.Size.MP) + " M."
                                     };
                         //dataGrdView.DataSource = _bind.ToList();
 
@@ -133,6 +141,7 @@ namespace CaculateTotalClothes
                         mBindingSource = new BindingSource();
                         mBindingSource.DataSource = _bind.ToList();
                         dataGrdView.DataSource = mBindingSource;
+                        dataGrdView.Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).Width = 350;
 
                     }
                     catch (Exception ex)
@@ -167,7 +176,7 @@ namespace CaculateTotalClothes
         {
             public string Buyer { get; set; }
             public int Carton { get; set; }
-            public int Ctns { get; set; }
+            //public int Ctns { get; set; }
             public string Style { get; set; }
             public string Color { get; set; }
             public Size Size { get; set; }
