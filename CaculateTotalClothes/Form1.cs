@@ -40,10 +40,6 @@ namespace CaculateTotalClothes
 
                             foreach (IXLRow row in workSheet.RowsUsed().Skip(13))
                             {
-                                if (row.RangeAddress.FirstAddress.RowNumber == 18)
-                                {
-
-                                }
                                 try
                                 {
                                     Products obj = (Products)Activator.CreateInstance(typeOfObject);
@@ -74,6 +70,7 @@ namespace CaculateTotalClothes
                                             size.SM = string.IsNullOrEmpty(row.Cell(colIndexSize + 18).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 18).Value);
                                             size.ML = string.IsNullOrEmpty(row.Cell(colIndexSize + 19).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 19).Value);
                                             size.LXL = string.IsNullOrEmpty(row.Cell(colIndexSize + 20).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 20).Value);
+                                            size.NoSize = string.IsNullOrEmpty(row.Cell(colIndexSize + 21).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 21).Value);
                                             prop.SetValue(obj, size);
                                         }
                                         else if (prop.Name.ToString() == "Type")
@@ -109,39 +106,16 @@ namespace CaculateTotalClothes
                                 }
                             }
                         }
-                        var _bind = from a in products
-                                    where a.Type == "1"
-                                    group a by new
-                                    {
-                                        a.Buyer,
-                                        a.Style,
-                                        a.Color
-                                    } into val
-                                    orderby val.Key.Style, val.Key.Color
-                                    select new Result()
-                                    {
-                                        Buyer = val.Key.Buyer,
-                                        Style = val.Key.Style,
-                                        Color = val.Key.Color,
-                                        XXXS = val.Sum(x=>x.Size.XXXS + x.Size.XXXSP),
-                                        XXS = val.Sum(x => x.Size.XXS + x.Size.XXSP),
-                                        XS = val.Sum(x => x.Size.XS + x.Size.XSP),
-                                        S = val.Sum(x => x.Size.S + x.Size.SP),
-                                        M = val.Sum(x => x.Size.M + x.Size.MP),
-                                        Data = /*"Buyer: " + val.Key.Buyer + ", Style: " + val.Key.Style + ", Data: " + */
-                                                val.Key.Color + ": " + val.Sum(x => x.Size.XXXS + x.Size.XXXSP) + " XXXS, " 
-                                                + val.Sum(x => x.Size.XXS + x.Size.XXSP) + " XXS, "
-                                                + val.Sum(x => x.Size.XS + x.Size.XSP)+ " XS, "
-                                                + val.Sum(x => x.Size.S + x.Size.SP)+ " S, "
-                                                + val.Sum(x => x.Size.M + x.Size.MP) + " M."
-                                    };
-                        //dataGrdView.DataSource = _bind.ToList();
 
-                        dataFilter = _bind.ToList();
+                        dataFilter = RenderData(products);
                         mBindingSource = new BindingSource();
-                        mBindingSource.DataSource = _bind.ToList();
+                        mBindingSource.DataSource = RenderData(products);
                         dataGrdView.DataSource = mBindingSource;
                         dataGrdView.Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).Width = 350;
+                        dataGrdView.Columns[0].Width = 200;
+                        dataGrdView.Columns[1].Width = 130;
+                        dataGrdView.Columns[2].Width = 200;
+                        dataGrdView.Columns[3].Width = 50;
 
                     }
                     catch (Exception ex)
@@ -155,7 +129,131 @@ namespace CaculateTotalClothes
                 }
             }
         }
+        public List<Result> RenderData(List<Products> products)
+        {
+            var _bindType2 = from a in products
+                             where a.Type == "2"
+                             group a by new
+                             {
+                                 a.Buyer,
+                                 a.Style,
+                                 a.Color
+                             } into val
+                             orderby val.Key.Style, val.Key.Color
+                             select new Result()
+                             {
+                                 Buyer = val.Key.Buyer,
+                                 Style = val.Key.Style,
+                                 Color = val.Key.Color,
+                                 Type = val.FirstOrDefault()?.Type,
+                                 Data = val.Key.Color + ": "
+                                     + (val.Sum(x => x.Size.XXXS + x.Size.XSP) > 0 ? val.Sum(x => x.Size.XXXS + x.Size.XSP) + " (sz00), " : "")
+                                     + (val.Sum(x => x.Size.XXS + x.Size.SP) > 0 ? val.Sum(x => x.Size.XXS + x.Size.SP) + " (sz0), " : "")
+                                     + (val.Sum(x => x.Size.XS + x.Size.MP) > 0 ? val.Sum(x => x.Size.XS + x.Size.MP) + " (sz2), " : "")
+                                     + (val.Sum(x => x.Size.S + x.Size.LP) > 0 ? val.Sum(x => x.Size.S + x.Size.LP) + " (sz4), " : "")
+                                     + (val.Sum(x => x.Size.M + x.Size.XLP) > 0 ? val.Sum(x => x.Size.M + x.Size.XLP) + " (sz6), " : "")
+                                     + (val.Sum(x => x.Size.L + x.Size.XXLP) > 0 ? val.Sum(x => x.Size.L + x.Size.XXLP) + " (sz8), " : "")
+                                     + (val.Sum(x => x.Size.XL + x.Size.XSS) > 0 ? val.Sum(x => x.Size.XL + x.Size.XSS) + " (sz10), " : "")
+                                     + (val.Sum(x => x.Size.XXL + x.Size.SM) > 0 ? val.Sum(x => x.Size.XXL + x.Size.SM) + " (sz12), " : "")
+                                     + (val.Sum(x => x.Size.XXXSP + x.Size.ML) > 0 ? val.Sum(x => x.Size.XXXSP + x.Size.ML) + " (sz14), " : "")
+                                     + (val.Sum(x => x.Size.P + x.Size.LXL) > 0 ? val.Sum(x => x.Size.P + x.Size.LXL) + " (sz16), " : "")
+                                     + (val.Sum(x => x.Size.XXSP + x.Size.NoSize) > 0 ? val.Sum(x => x.Size.XXSP + x.Size.NoSize) + " (sz18)." : "")
+                             };
+            var _bindType4 = from a in products
+                             where a.Type == "4"
+                             group a by new
+                             {
+                                 a.Buyer,
+                                 a.Style,
+                                 a.Color
+                             } into val
+                             orderby val.Key.Style, val.Key.Color
+                             select new Result()
+                             {
+                                 Buyer = val.Key.Buyer,
+                                 Style = val.Key.Style,
+                                 Color = val.Key.Color,
+                                 Type = val.FirstOrDefault()?.Type,
+                                 Data = val.Key.Color + ": "
+                                     + (val.FirstOrDefault()?.Size.S > 0 ? val.FirstOrDefault()?.Size.S + " (sz2), " : "")
+                                     + (val.FirstOrDefault()?.Size.M > 0 ? val.FirstOrDefault()?.Size.M + " (sz3), " : "")
+                                     + (val.FirstOrDefault()?.Size.L > 0 ? val.FirstOrDefault()?.Size.L + " (sz4), " : "")
+                                     + (val.FirstOrDefault()?.Size.XL > 0 ? val.FirstOrDefault()?.Size.XL + " (sz5), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXL > 0 ? val.FirstOrDefault()?.Size.XXL + " (sz6), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXXSP > 0 ? val.FirstOrDefault()?.Size.XXXSP + " (sz7), " : "")
+                                     + (val.FirstOrDefault()?.Size.P > 0 ? val.FirstOrDefault()?.Size.P + " (sz8), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXSP > 0 ? val.FirstOrDefault()?.Size.XXSP + " (sz9), " : "")
+                                     + (val.FirstOrDefault()?.Size.XSP > 0 ? val.FirstOrDefault()?.Size.XSP + " (sz10), " : "")
+                                     + (val.FirstOrDefault()?.Size.SP > 0 ? val.FirstOrDefault()?.Size.SP + " (sz11), " : "")
+                                     + (val.FirstOrDefault()?.Size.MP > 0 ? val.FirstOrDefault()?.Size.MP + " (sz12), " : "")
+                                     + (val.FirstOrDefault()?.Size.LP > 0 ? val.FirstOrDefault()?.Size.LP + " (sz13), " : "")
+                                     + (val.FirstOrDefault()?.Size.XLP > 0 ? val.FirstOrDefault()?.Size.XLP + " (sz14), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXLP > 0 ? val.FirstOrDefault()?.Size.XXLP + " (sz15), " : "")
+                                     + (val.FirstOrDefault()?.Size.XSS > 0 ? val.FirstOrDefault()?.Size.XSS + " (sz16)." : "")
+                             };
+            var _bindType10 = from a in products
+                              where a.Type == "10"
+                              group a by new
+                              {
+                                  a.Buyer,
+                                  a.Style,
+                                  a.Color
+                              } into val
+                              orderby val.Key.Style, val.Key.Color
+                              select new Result()
+                              {
+                                  Buyer = val.Key.Buyer,
+                                  Style = val.Key.Style,
+                                  Color = val.Key.Color,
+                                  Type = val.FirstOrDefault()?.Type,
+                                  Data = val.Key.Color + ": "
+                                      + (val.FirstOrDefault()?.Size.SP > 0 ? val.FirstOrDefault()?.Size.SP + " (sz30), " : "")
+                                      + (val.FirstOrDefault()?.Size.MP > 0 ? val.FirstOrDefault()?.Size.MP + " (sz32), " : "")
+                                      + (val.FirstOrDefault()?.Size.LP > 0 ? val.FirstOrDefault()?.Size.LP + " (sz34), " : "")
+                                      + (val.FirstOrDefault()?.Size.XLP > 0 ? val.FirstOrDefault()?.Size.XLP + " (sz36), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXLP > 0 ? val.FirstOrDefault()?.Size.XXLP + " (sz38), " : "")
+                                      + (val.FirstOrDefault()?.Size.XSS > 0 ? val.FirstOrDefault()?.Size.XSS + " (sz40), " : "")
+                                      + (val.FirstOrDefault()?.Size.SM > 0 ? val.FirstOrDefault()?.Size.SM + " (sz42), " : "")
+                                      + (val.FirstOrDefault()?.Size.ML > 0 ? val.FirstOrDefault()?.Size.ML + " (sz44), " : "")
+                                      + (val.FirstOrDefault()?.Size.LXL > 0 ? val.FirstOrDefault()?.Size.LXL + " (sz46), " : "")
+                                      + (val.FirstOrDefault()?.Size.NoSize > 0 ? val.FirstOrDefault()?.Size.NoSize + " (sz48)." : "")
+                              };
+            var _bindType1 = from a in products
+                             where a.Type == "1"
+                             group a by new
+                             {
+                                 a.Buyer,
+                                 a.Style,
+                                 a.Color
+                             } into val
+                             orderby val.Key.Style, val.Key.Color
+                             select new Result()
+                             {
+                                 Buyer = val.Key.Buyer,
+                                 Style = val.Key.Style,
+                                 Color = val.Key.Color,
+                                 Type = val.FirstOrDefault()?.Type,
+                                 //XXXS = val.Sum(x=>x.Size.XXXS + x.Size.XXXSP),
+                                 //XXS = val.Sum(x => x.Size.XXS + x.Size.XXSP),
+                                 //XS = val.Sum(x => x.Size.XS + x.Size.XSP),
+                                 //S = val.Sum(x => x.Size.S + x.Size.SP),
+                                 //M = val.Sum(x => x.Size.M + x.Size.MP),
+                                 Data = val.Key.Color + ": "
+                                     + (val.Sum(x => x.Size.XXXS + x.Size.XXXSP) > 0 ? val.Sum(x => x.Size.XXXS + x.Size.XXXSP) + " XXXS, " : "")
+                                     + (val.Sum(x => x.Size.XXS + x.Size.XXSP) > 0 ? val.Sum(x => x.Size.XXS + x.Size.XXSP) + " XXS, " : "")
+                                     + (val.Sum(x => x.Size.XS + x.Size.XSP) > 0 ? val.Sum(x => x.Size.XS + x.Size.XSP) + " XS, " : "")
+                                     + (val.Sum(x => x.Size.S + x.Size.SP) > 0 ? val.Sum(x => x.Size.S + x.Size.SP) + " S, " : "")
+                                     + (val.Sum(x => x.Size.M + x.Size.MP) > 0 ? val.Sum(x => x.Size.M + x.Size.MP) + " M." : "")
+                             };
+            //dataGrdView.DataSource = _bind.ToList();
+            var _bind = new List<Result>();
+            _bind.AddRange(_bindType1);
+            _bind.AddRange(_bindType2);
+            _bind.AddRange(_bindType4);
+            _bind.AddRange(_bindType10);
 
+            return _bind.ToList();
+        }
         private void cancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -165,11 +263,12 @@ namespace CaculateTotalClothes
             public string Buyer { get; set; }
             public string Style { get; set; }
             public string Color { get; set; }
-            public int XXXS { get; set; }
-            public int XXS { get; set; }
-            public int XS { get; set; }
-            public int S { get; set; }
-            public int M { get; set; }
+            public string Type { get; set; }
+            //public int XXXS { get; set; }
+            //public int XXS { get; set; }
+            //public int XS { get; set; }
+            //public int S { get; set; }
+            //public int M { get; set; }
             public string Data { get; set; }
         }
         public class Products
@@ -205,6 +304,7 @@ namespace CaculateTotalClothes
             public int SM { get; set; } = 0;
             public int ML { get; set; } = 0;
             public int LXL { get; set; } = 0;
+            public int NoSize { get; set; } = 0;
         }
 
         private void dataGrdView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -230,6 +330,10 @@ namespace CaculateTotalClothes
                     else if (cbb_styleCode.Text == "Style")
                     {
                         dataGrdView.DataSource = dataFilter.Where(x => x.Style.Contains(tb_styleCode.Text.ToUpper())).ToList();
+                    }
+                    else if (cbb_styleCode.Text == "Type")
+                    {
+                        dataGrdView.DataSource = dataFilter.Where(x => x.Type.Equals(tb_styleCode.Text.ToUpper())).ToList();
                     }
                     else
                     {

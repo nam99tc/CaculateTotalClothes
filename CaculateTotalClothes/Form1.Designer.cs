@@ -36,6 +36,8 @@ namespace CaculateTotalClothes
             this.label2 = new System.Windows.Forms.Label();
             this.tb_styleCode = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrdView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -49,21 +51,20 @@ namespace CaculateTotalClothes
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGrdView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGrdView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrdView.Location = new System.Drawing.Point(8, 98);
+            this.dataGrdView.Location = new System.Drawing.Point(12, 133);
             this.dataGrdView.Name = "dataGrdView";
             this.dataGrdView.ReadOnly = true;
             this.dataGrdView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGrdView.RowTemplate.Height = 29;
-            this.dataGrdView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrdView.Size = new System.Drawing.Size(1600, 643);
+            this.dataGrdView.Size = new System.Drawing.Size(1236, 608);
             this.dataGrdView.TabIndex = 0;
             this.dataGrdView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrdView_CellContentClick);
             // 
             // chooseFIle
             // 
-            this.chooseFIle.Location = new System.Drawing.Point(3, 25);
+            this.chooseFIle.Location = new System.Drawing.Point(44, 34);
             this.chooseFIle.Name = "chooseFIle";
-            this.chooseFIle.Size = new System.Drawing.Size(273, 29);
+            this.chooseFIle.Size = new System.Drawing.Size(228, 56);
             this.chooseFIle.TabIndex = 1;
             this.chooseFIle.Text = "Choose File ";
             this.chooseFIle.UseVisualStyleBackColor = true;
@@ -75,7 +76,8 @@ namespace CaculateTotalClothes
             this.cbb_styleCode.Items.AddRange(new object[] {
             "Buyer",
             "Style",
-            "Color"});
+            "Color",
+            "Type"});
             this.cbb_styleCode.Location = new System.Drawing.Point(430, 26);
             this.cbb_styleCode.Name = "cbb_styleCode";
             this.cbb_styleCode.Size = new System.Drawing.Size(193, 28);
@@ -84,7 +86,7 @@ namespace CaculateTotalClothes
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(341, 34);
+            this.label1.Location = new System.Drawing.Point(344, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 4;
@@ -93,7 +95,7 @@ namespace CaculateTotalClothes
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(719, 35);
+            this.label2.Location = new System.Drawing.Point(357, 82);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 6;
@@ -101,32 +103,52 @@ namespace CaculateTotalClothes
             // 
             // tb_styleCode
             // 
-            this.tb_styleCode.Location = new System.Drawing.Point(790, 28);
+            this.tb_styleCode.Location = new System.Drawing.Point(430, 75);
             this.tb_styleCode.Name = "tb_styleCode";
-            this.tb_styleCode.Size = new System.Drawing.Size(199, 27);
+            this.tb_styleCode.Size = new System.Drawing.Size(193, 27);
             this.tb_styleCode.TabIndex = 7;
             this.tb_styleCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_styleCode_KeyDown);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.tb_styleCode);
             this.panel1.Controls.Add(this.chooseFIle);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cbb_styleCode);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(148, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1120, 72);
+            this.panel1.Size = new System.Drawing.Size(996, 115);
             this.panel1.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(648, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(266, 20);
+            this.label4.TabIndex = 10;
+            this.label4.Text = ": Nhập thông tin cần search và ấn Enter";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(648, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(178, 20);
+            this.label3.TabIndex = 9;
+            this.label3.Text = ": Chọn cột muốn lọc data.";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1632, 753);
+            this.ClientSize = new System.Drawing.Size(1260, 753);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGrdView);
-            this.MinimumSize = new System.Drawing.Size(1650, 800);
+            this.MinimumSize = new System.Drawing.Size(800, 400);
             this.Name = "Form1";
             this.Text = "Caculate";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -146,6 +168,8 @@ namespace CaculateTotalClothes
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_styleCode;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }
 
