@@ -307,48 +307,40 @@ namespace CaculateTotalClothes
             public int NoSize { get; set; } = 0;
         }
 
-        private void dataGrdView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGrdView.DataSource = mBindingSource;
         }
 
-        private void tb_styleCode_KeyDown(object sender, KeyEventArgs e)
+        private void btn_search_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            try
             {
-                try
+                if (cbb_styleCode.Text == "Buyer")
                 {
-                    if (cbb_styleCode.Text == "Buyer")
-                    {
-                        dataGrdView.DataSource = dataFilter.Where(x => x.Buyer.Contains(tb_styleCode.Text.ToUpper())).ToList();
-                    }
-                    else if (cbb_styleCode.Text == "Style")
-                    {
-                        dataGrdView.DataSource = dataFilter.Where(x => x.Style.Contains(tb_styleCode.Text.ToUpper())).ToList();
-                    }
-                    else if (cbb_styleCode.Text == "Type")
-                    {
-                        dataGrdView.DataSource = dataFilter.Where(x => x.Type.Equals(tb_styleCode.Text.ToUpper())).ToList();
-                    }
-                    else
-                    {
-                        dataGrdView.DataSource = dataFilter.Where(x => x.Color.Contains(tb_styleCode.Text.ToUpper())).ToList();
-                    }
-                    //if (mBindingSource != null)
-                    //{
-                    //    mBindingSource.Filter = string.Format("{0} = '{1}'", cbb_styleCode.Text, tb_styleCode.Text);
-                    //    dataGrdView.DataSource = mBindingSource;
-                    //}
+                    dataGrdView.DataSource = dataFilter.Where(x => x.Buyer.Contains(tb_styleCode.Text.ToUpper())).ToList();
                 }
-                catch (Exception ex)
+                else if (cbb_styleCode.Text == "Style")
                 {
-                    throw;
+                    dataGrdView.DataSource = dataFilter.Where(x => x.Style.Contains(tb_styleCode.Text.ToUpper())).ToList();
                 }
+                else if (cbb_styleCode.Text == "Type")
+                {
+                    dataGrdView.DataSource = dataFilter.Where(x => x.Type.Equals(tb_styleCode.Text.ToUpper())).ToList();
+                }
+                else
+                {
+                    dataGrdView.DataSource = dataFilter.Where(x => x.Color.Contains(tb_styleCode.Text.ToUpper())).ToList();
+                }
+                //if (mBindingSource != null)
+                //{
+                //    mBindingSource.Filter = string.Format("{0} = '{1}'", cbb_styleCode.Text, tb_styleCode.Text);
+                //    dataGrdView.DataSource = mBindingSource;
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

@@ -36,8 +36,7 @@ namespace CaculateTotalClothes
             this.label2 = new System.Windows.Forms.Label();
             this.tb_styleCode = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btn_search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrdView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -51,20 +50,19 @@ namespace CaculateTotalClothes
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGrdView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGrdView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrdView.Location = new System.Drawing.Point(12, 133);
+            this.dataGrdView.Location = new System.Drawing.Point(12, 155);
             this.dataGrdView.Name = "dataGrdView";
             this.dataGrdView.ReadOnly = true;
             this.dataGrdView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGrdView.RowTemplate.Height = 29;
-            this.dataGrdView.Size = new System.Drawing.Size(1236, 608);
+            this.dataGrdView.Size = new System.Drawing.Size(1236, 586);
             this.dataGrdView.TabIndex = 0;
-            this.dataGrdView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrdView_CellContentClick);
             // 
             // chooseFIle
             // 
-            this.chooseFIle.Location = new System.Drawing.Point(44, 34);
+            this.chooseFIle.Location = new System.Drawing.Point(12, 39);
             this.chooseFIle.Name = "chooseFIle";
-            this.chooseFIle.Size = new System.Drawing.Size(228, 56);
+            this.chooseFIle.Size = new System.Drawing.Size(190, 56);
             this.chooseFIle.TabIndex = 1;
             this.chooseFIle.Text = "Choose File ";
             this.chooseFIle.UseVisualStyleBackColor = true;
@@ -78,7 +76,7 @@ namespace CaculateTotalClothes
             "Style",
             "Color",
             "Type"});
-            this.cbb_styleCode.Location = new System.Drawing.Point(430, 26);
+            this.cbb_styleCode.Location = new System.Drawing.Point(333, 27);
             this.cbb_styleCode.Name = "cbb_styleCode";
             this.cbb_styleCode.Size = new System.Drawing.Size(193, 28);
             this.cbb_styleCode.TabIndex = 3;
@@ -86,7 +84,7 @@ namespace CaculateTotalClothes
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(344, 34);
+            this.label1.Location = new System.Drawing.Point(247, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 4;
@@ -95,7 +93,7 @@ namespace CaculateTotalClothes
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(357, 82);
+            this.label2.Location = new System.Drawing.Point(260, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 6;
@@ -103,16 +101,14 @@ namespace CaculateTotalClothes
             // 
             // tb_styleCode
             // 
-            this.tb_styleCode.Location = new System.Drawing.Point(430, 75);
+            this.tb_styleCode.Location = new System.Drawing.Point(333, 74);
             this.tb_styleCode.Name = "tb_styleCode";
             this.tb_styleCode.Size = new System.Drawing.Size(193, 27);
             this.tb_styleCode.TabIndex = 7;
-            this.tb_styleCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_styleCode_KeyDown);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.btn_search);
             this.panel1.Controls.Add(this.tb_styleCode);
             this.panel1.Controls.Add(this.chooseFIle);
             this.panel1.Controls.Add(this.label2);
@@ -120,26 +116,18 @@ namespace CaculateTotalClothes
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(148, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(996, 115);
+            this.panel1.Size = new System.Drawing.Size(996, 137);
             this.panel1.TabIndex = 8;
             // 
-            // label4
+            // btn_search
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(648, 82);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(266, 20);
-            this.label4.TabIndex = 10;
-            this.label4.Text = ": Nhập thông tin cần search và ấn Enter";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(648, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(178, 20);
-            this.label3.TabIndex = 9;
-            this.label3.Text = ": Chọn cột muốn lọc data.";
+            this.btn_search.Location = new System.Drawing.Point(583, 39);
+            this.btn_search.Name = "btn_search";
+            this.btn_search.Size = new System.Drawing.Size(179, 56);
+            this.btn_search.TabIndex = 11;
+            this.btn_search.Text = "Search";
+            this.btn_search.UseVisualStyleBackColor = true;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
             // 
             // Form1
             // 
@@ -168,8 +156,7 @@ namespace CaculateTotalClothes
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_styleCode;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_search;
     }
 }
 
