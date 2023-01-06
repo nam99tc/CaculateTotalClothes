@@ -49,34 +49,34 @@ namespace CaculateTotalClothes
                                         {
                                             int colIndexSize = columns.SingleOrDefault(x => x.Value.ToString().ToLower().Contains(prop.Name.ToString().ToLower())).Index;
                                             Size size = new Size();
-                                            size.XXXS = string.IsNullOrEmpty(row.Cell(colIndexSize).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize).Value);
-                                            size.XXS = string.IsNullOrEmpty(row.Cell(colIndexSize + 1).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 1).Value);
-                                            size.XS = string.IsNullOrEmpty(row.Cell(colIndexSize + 2).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 2).Value);
-                                            size.S = string.IsNullOrEmpty(row.Cell(colIndexSize + 3).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 3).Value);
-                                            size.M = string.IsNullOrEmpty(row.Cell(colIndexSize + 4).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 4).Value);
-                                            size.L = string.IsNullOrEmpty(row.Cell(colIndexSize + 5).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 5).Value);
-                                            size.XL = string.IsNullOrEmpty(row.Cell(colIndexSize + 6).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 6).Value);
-                                            size.XXL = string.IsNullOrEmpty(row.Cell(colIndexSize + 7).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 7).Value);
-                                            size.XXXSP = string.IsNullOrEmpty(row.Cell(colIndexSize + 8).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 8).Value);
-                                            size.P = string.IsNullOrEmpty(row.Cell(colIndexSize + 9).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 9).Value);
-                                            size.XXSP = string.IsNullOrEmpty(row.Cell(colIndexSize + 10).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 10).Value);
-                                            size.XSP = string.IsNullOrEmpty(row.Cell(colIndexSize + 11).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 11).Value);
-                                            size.SP = string.IsNullOrEmpty(row.Cell(colIndexSize + 12).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 12).Value);
-                                            size.MP = string.IsNullOrEmpty(row.Cell(colIndexSize + 13).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 13).Value);
-                                            size.LP = string.IsNullOrEmpty(row.Cell(colIndexSize + 14).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 14).Value);
-                                            size.XLP = string.IsNullOrEmpty(row.Cell(colIndexSize + 15).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 15).Value);
-                                            size.XXLP = string.IsNullOrEmpty(row.Cell(colIndexSize + 16).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 16).Value);
-                                            size.XSS = string.IsNullOrEmpty(row.Cell(colIndexSize + 17).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 17).Value);
-                                            size.SM = string.IsNullOrEmpty(row.Cell(colIndexSize + 18).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 18).Value);
-                                            size.ML = string.IsNullOrEmpty(row.Cell(colIndexSize + 19).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 19).Value);
-                                            size.LXL = string.IsNullOrEmpty(row.Cell(colIndexSize + 20).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 20).Value);
-                                            size.NoSize = string.IsNullOrEmpty(row.Cell(colIndexSize + 21).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndexSize + 21).Value);
+                                            size.XXXS = ParseInt(row.Cell(colIndexSize).Value.ToString());
+                                            size.XXS = ParseInt(row.Cell(colIndexSize + 1).Value.ToString());
+                                            size.XS = ParseInt(row.Cell(colIndexSize + 2).Value.ToString());
+                                            size.S = ParseInt(row.Cell(colIndexSize + 3).Value.ToString());
+                                            size.M = ParseInt(row.Cell(colIndexSize + 4).Value.ToString());
+                                            size.L = ParseInt(row.Cell(colIndexSize + 5).Value.ToString());
+                                            size.XL = ParseInt(row.Cell(colIndexSize + 6).Value.ToString());
+                                            size.XXL = ParseInt(row.Cell(colIndexSize + 7).Value.ToString());
+                                            size.XXXSP = ParseInt(row.Cell(colIndexSize + 8).Value.ToString());
+                                            size.P = ParseInt(row.Cell(colIndexSize + 9).Value.ToString());
+                                            size.XXSP = ParseInt(row.Cell(colIndexSize + 10).Value.ToString());
+                                            size.XSP = ParseInt(row.Cell(colIndexSize + 11).Value.ToString());
+                                            size.SP = ParseInt(row.Cell(colIndexSize + 12).Value.ToString());
+                                            size.MP = ParseInt(row.Cell(colIndexSize + 13).Value.ToString());
+                                            size.LP = ParseInt(row.Cell(colIndexSize + 14).Value.ToString());
+                                            size.XLP = ParseInt(row.Cell(colIndexSize + 15).Value.ToString());
+                                            size.XXLP = ParseInt(row.Cell(colIndexSize + 16).Value.ToString());
+                                            size.XSS = ParseInt(row.Cell(colIndexSize + 17).Value.ToString());
+                                            size.SM = ParseInt(row.Cell(colIndexSize + 18).Value.ToString());
+                                            size.ML = ParseInt(row.Cell(colIndexSize + 19).Value.ToString());
+                                            size.LXL = ParseInt(row.Cell(colIndexSize + 20).Value.ToString());
+                                            size.NoSize = ParseInt(row.Cell(colIndexSize + 21).Value.ToString());
                                             prop.SetValue(obj, size);
                                         }
                                         else if (prop.Name.ToString() == "Type")
                                         {
                                             int colIndex = columns.SingleOrDefault(x => x.Value.ToString() == "TTL").Index + 1;
-                                            var val = string.IsNullOrEmpty(row.Cell(colIndex).Value.ToString()) ? "1" : row.Cell(colIndex).Value;
+                                            var val = ParseInt(row.Cell(colIndex).Value.ToString());
                                             var type = prop.PropertyType;
                                             prop.SetValue(obj, Convert.ChangeType(val, type));
                                         }
@@ -92,7 +92,7 @@ namespace CaculateTotalClothes
                                             else
                                             {
                                                 int colIndex = columns.SingleOrDefault(x => x.Value.ToString().ToLower().Contains(prop.Name.ToString().ToLower())).Index;
-                                                var val = string.IsNullOrEmpty(row.Cell(colIndex).Value.ToString()) ? 0 : Convert.ToInt32(row.Cell(colIndex).Value);
+                                                var val = ParseInt(row.Cell(colIndex).Value.ToString());
                                                 var type = prop.PropertyType;
                                                 prop.SetValue(obj, Convert.ChangeType(val, type));
                                             }
@@ -342,6 +342,15 @@ namespace CaculateTotalClothes
             {
                 throw;
             }
+        }
+        public int ParseInt(string value)
+        {
+            int parsedInt;
+            if (int.TryParse(value, out parsedInt))
+            {
+                return parsedInt;
+            }
+            return 0;
         }
     }
 }
