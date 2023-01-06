@@ -76,7 +76,7 @@ namespace CaculateTotalClothes
                                         else if (prop.Name.ToString() == "Type")
                                         {
                                             int colIndex = columns.SingleOrDefault(x => x.Value.ToString() == "TTL").Index + 1;
-                                            var val = ParseInt(row.Cell(colIndex).Value.ToString());
+                                            var val = ParseInt(row.Cell(colIndex).Value.ToString(), 1);
                                             var type = prop.PropertyType;
                                             prop.SetValue(obj, Convert.ChangeType(val, type));
                                         }
@@ -343,14 +343,14 @@ namespace CaculateTotalClothes
                 throw;
             }
         }
-        public int ParseInt(string value)
+        public int ParseInt(string value, int defaulValue = 0)
         {
             int parsedInt;
             if (int.TryParse(value, out parsedInt))
             {
                 return parsedInt;
             }
-            return 0;
+            return defaulValue;
         }
     }
 }
