@@ -34,7 +34,8 @@ namespace CaculateTotalClothes
                         {
                             var workShaeet = workbook.Worksheets.Select(x => x.Name).ToList();
                             //var workSheet = workbook.Worksheets.Where(x => x.Name == "VNKS (1.11)").First();
-                            var workSheet = workbook.Worksheets.Skip(1).First();
+                            //var workSheet = workbook.Worksheets.Skip(1).First();
+                            var workSheet = workbook.Worksheets.First();
                             var properties = typeOfObject.GetProperties();
                             var columns = workSheet.Row(3).Cells().Select((v, i) => new { Value = v.Value, Index = i + 1 });
 
@@ -243,13 +244,125 @@ namespace CaculateTotalClothes
                                      + (val.Sum(x => x.Size.XXS + x.Size.XXSP) > 0 ? val.Sum(x => x.Size.XXS + x.Size.XXSP) + " XXS, " : "")
                                      + (val.Sum(x => x.Size.XS + x.Size.XSP) > 0 ? val.Sum(x => x.Size.XS + x.Size.XSP) + " XS, " : "")
                                      + (val.Sum(x => x.Size.S + x.Size.SP) > 0 ? val.Sum(x => x.Size.S + x.Size.SP) + " S, " : "")
-                                     + (val.Sum(x => x.Size.M + x.Size.MP) > 0 ? val.Sum(x => x.Size.M + x.Size.MP) + " M." : "")
+                                     + (val.Sum(x => x.Size.M + x.Size.MP) > 0 ? val.Sum(x => x.Size.M + x.Size.MP) + " M," : "")
+                                     + (val.Sum(x => x.Size.L + x.Size.LP) > 0 ? val.Sum(x => x.Size.L + x.Size.LP) + " L," : "")
+                                     + (val.Sum(x => x.Size.XL + x.Size.XLP) > 0 ? val.Sum(x => x.Size.XL + x.Size.XLP) + " XL," : "")
+                                     + (val.Sum(x => x.Size.XXL + x.Size.XXLP) > 0 ? val.Sum(x => x.Size.XXL + x.Size.XXLP) + " XXL." : "")
+                             };
+            var _bindType9 = from a in products
+                             where a.Type == "9"
+                             group a by new
+                             {
+                                 a.Buyer,
+                                 a.Style,
+                                 a.Color
+                             } into val
+                             orderby val.Key.Style, val.Key.Color
+                             select new Result()
+                             {
+                                 Buyer = val.Key.Buyer,
+                                 Style = val.Key.Style,
+                                 Color = val.Key.Color,
+                                 Type = val.FirstOrDefault()?.Type,
+                                 //XXXS = val.Sum(x=>x.Size.XXXS + x.Size.XXXSP),
+                                 //XXS = val.Sum(x => x.Size.XXS + x.Size.XXSP),
+                                 //XS = val.Sum(x => x.Size.XS + x.Size.XSP),
+                                 //S = val.Sum(x => x.Size.S + x.Size.SP),
+                                 //M = val.Sum(x => x.Size.M + x.Size.MP),
+                                 Data = val.Key.Color + ": "
+                                     + (val.Sum(x => x.Size.XXXS + x.Size.XXXSP) > 0 ? val.Sum(x => x.Size.XXXS + x.Size.XXXSP) + " XXXS, " : "")
+                                     + (val.Sum(x => x.Size.XXS + x.Size.XXSP) > 0 ? val.Sum(x => x.Size.XXS + x.Size.XXSP) + " XXS, " : "")
+                                     + (val.Sum(x => x.Size.XS + x.Size.XSP) > 0 ? val.Sum(x => x.Size.XS + x.Size.XSP) + " XS, " : "")
+                                     + (val.Sum(x => x.Size.S + x.Size.SP) > 0 ? val.Sum(x => x.Size.S + x.Size.SP) + " S, " : "")
+                                     + (val.Sum(x => x.Size.M + x.Size.MP) > 0 ? val.Sum(x => x.Size.M + x.Size.MP) + " M," : "")
+                                     + (val.Sum(x => x.Size.L + x.Size.LP) > 0 ? val.Sum(x => x.Size.L + x.Size.LP) + " L," : "")
+                                     + (val.Sum(x => x.Size.XL + x.Size.XLP) > 0 ? val.Sum(x => x.Size.XL + x.Size.XLP) + " XL," : "")
+                                     + (val.Sum(x => x.Size.XXL + x.Size.XXLP) > 0 ? val.Sum(x => x.Size.XXL + x.Size.XXLP) + " XXL." : "")
+                             };
+            var _bindType7 = from a in products
+                              where a.Type == "7"
+                              group a by new
+                              {
+                                  a.Buyer,
+                                  a.Style,
+                                  a.Color
+                              } into val
+                              orderby val.Key.Style, val.Key.Color
+                              select new Result()
+                              {
+                                  Buyer = val.Key.Buyer,
+                                  Style = val.Key.Style,
+                                  Color = val.Key.Color,
+                                  Type = val.FirstOrDefault()?.Type,
+                                  Data = val.Key.Color + ": "
+                                      + (val.FirstOrDefault()?.Size.XXXS > 0 ? val.FirstOrDefault()?.Size.XXXS + " (sz00), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXS > 0 ? val.FirstOrDefault()?.Size.XXS + " (sz0), " : "")
+                                      + (val.FirstOrDefault()?.Size.XS > 0 ? val.FirstOrDefault()?.Size.XS + " (sz2), " : "")
+                                      + (val.FirstOrDefault()?.Size.S > 0 ? val.FirstOrDefault()?.Size.S + " (sz4), " : "")
+                                      + (val.FirstOrDefault()?.Size.M > 0 ? val.FirstOrDefault()?.Size.M + " (sz6), " : "")
+                                      + (val.FirstOrDefault()?.Size.L > 0 ? val.FirstOrDefault()?.Size.L + " (sz8), " : "")
+                                      + (val.FirstOrDefault()?.Size.XL > 0 ? val.FirstOrDefault()?.Size.XL + " (sz10), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXL > 0 ? val.FirstOrDefault()?.Size.XXL + " (sz12), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXXSP > 0 ? val.FirstOrDefault()?.Size.XXXSP + " (sz14), " : "")
+                                      + (val.FirstOrDefault()?.Size.P > 0 ? val.FirstOrDefault()?.Size.P + " (sz16), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXSP > 0 ? val.FirstOrDefault()?.Size.XXSP + " (sz18), " : "")
+                                      + (val.FirstOrDefault()?.Size.XSP > 0 ? val.FirstOrDefault()?.Size.XSP + " (sz20), " : "")
+                                      + (val.FirstOrDefault()?.Size.SP > 0 ? val.FirstOrDefault()?.Size.SP + " (sz22), " : "")
+                                      + (val.FirstOrDefault()?.Size.MP > 0 ? val.FirstOrDefault()?.Size.MP + " (sz24), " : "")
+                                      + (val.FirstOrDefault()?.Size.LP > 0 ? val.FirstOrDefault()?.Size.LP + " (sz26), " : "")
+                                      + (val.FirstOrDefault()?.Size.XLP > 0 ? val.FirstOrDefault()?.Size.XLP + " (sz28), " : "")
+                                      + (val.FirstOrDefault()?.Size.XXLP > 0 ? val.FirstOrDefault()?.Size.XXLP + " (sz10/12), " : "")
+                                      + (val.FirstOrDefault()?.Size.XSS > 0 ? val.FirstOrDefault()?.Size.XSS + " (sz14/16), " : "")
+                                      + (val.FirstOrDefault()?.Size.SM > 0 ? val.FirstOrDefault()?.Size.SM + " (sz18/20), " : "")
+                                      + (val.FirstOrDefault()?.Size.ML > 0 ? val.FirstOrDefault()?.Size.ML + " (sz22/24)," : "")
+                                      + (val.FirstOrDefault()?.Size.LXL  > 0 ? val.FirstOrDefault()?.Size.LXL + " (sz26/28)." : "")
+                              };
+            var _bindType8 = from a in products
+                             where a.Type == "8"
+                             group a by new
+                             {
+                                 a.Buyer,
+                                 a.Style,
+                                 a.Color
+                             } into val
+                             orderby val.Key.Style, val.Key.Color
+                             select new Result()
+                             {
+                                 Buyer = val.Key.Buyer,
+                                 Style = val.Key.Style,
+                                 Color = val.Key.Color,
+                                 Type = val.FirstOrDefault()?.Type,
+                                 Data = val.Key.Color + ": "
+                                     + (val.FirstOrDefault()?.Size.XXXS > 0 ? val.FirstOrDefault()?.Size.XXXS + " (sz10/12), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXS > 0 ? val.FirstOrDefault()?.Size.XXS + " (sz14/16), " : "")
+                                     + (val.FirstOrDefault()?.Size.XS > 0 ? val.FirstOrDefault()?.Size.XS + " (sz18/20), " : "")
+                                     + (val.FirstOrDefault()?.Size.S > 0 ? val.FirstOrDefault()?.Size.S + " (sz22/24), " : "")
+                                     + (val.FirstOrDefault()?.Size.M > 0 ? val.FirstOrDefault()?.Size.M + " (sz26/28), " : "")
+                                     + (val.FirstOrDefault()?.Size.L > 0 ? val.FirstOrDefault()?.Size.L + " (sz30/32), " : "")
+                                     + (val.FirstOrDefault()?.Size.XL > 0 ? val.FirstOrDefault()?.Size.XL + " (sz34/36), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXL > 0 ? val.FirstOrDefault()?.Size.XXL + " (sz38/40), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXXSP > 0 ? val.FirstOrDefault()?.Size.XXXSP + " (sz60), " : "")
+                                     + (val.FirstOrDefault()?.Size.P > 0 ? val.FirstOrDefault()?.Size.P + " (sz75), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXSP > 0 ? val.FirstOrDefault()?.Size.XXSP + " (sz80), " : "")
+                                     + (val.FirstOrDefault()?.Size.XSP > 0 ? val.FirstOrDefault()?.Size.XSP + " (sz90), " : "")
+                                     + (val.FirstOrDefault()?.Size.SP > 0 ? val.FirstOrDefault()?.Size.SP + " (sz100), " : "")
+                                     + (val.FirstOrDefault()?.Size.MP > 0 ? val.FirstOrDefault()?.Size.MP + " (sz110), " : "")
+                                     + (val.FirstOrDefault()?.Size.LP > 0 ? val.FirstOrDefault()?.Size.LP + " (sz120), " : "")
+                                     + (val.FirstOrDefault()?.Size.XLP > 0 ? val.FirstOrDefault()?.Size.XLP + " (sz2XL), " : "")
+                                     + (val.FirstOrDefault()?.Size.XXLP > 0 ? val.FirstOrDefault()?.Size.XXLP + " (sz3XL), " : "")
+                                     + (val.FirstOrDefault()?.Size.XSS > 0 ? val.FirstOrDefault()?.Size.XSS + " (sz4XL), " : "")
+                                     + (val.FirstOrDefault()?.Size.SM > 0 ? val.FirstOrDefault()?.Size.SM + " (sz5XL), " : "")
+                                     + (val.FirstOrDefault()?.Size.ML > 0 ? val.FirstOrDefault()?.Size.ML + " (sz6XL)," : "")
+                                     + (val.FirstOrDefault()?.Size.LXL > 0 ? val.FirstOrDefault()?.Size.LXL + " (sz7XL)." : "")
                              };
             //dataGrdView.DataSource = _bind.ToList();
             var _bind = new List<Result>();
             _bind.AddRange(_bindType1);
             _bind.AddRange(_bindType2);
             _bind.AddRange(_bindType4);
+            _bind.AddRange(_bindType7);
+            _bind.AddRange(_bindType8);
+            _bind.AddRange(_bindType9);
             _bind.AddRange(_bindType10);
 
             return _bind.ToList();
